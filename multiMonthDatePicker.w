@@ -177,7 +177,7 @@ DEFINE BUTTON bntAdvanceMonth  NO-FOCUS
      SIZE 4.5 BY .88.
 
 DEFINE BUTTON bntAdvanceYear  NO-FOCUS
-     LABEL ">|" 
+     LABEL ">>" 
      SIZE 4.5 BY .88.
 
 DEFINE BUTTON bntClose AUTO-END-KEY 
@@ -190,7 +190,7 @@ DEFINE BUTTON bntDecrimentMonth  NO-FOCUS
      SIZE 4.5 BY .88.
 
 DEFINE BUTTON bntDecrimentYear  NO-FOCUS
-     LABEL "|<" 
+     LABEL "<<" 
      SIZE 4.5 BY .88.
 
 DEFINE BUTTON bntTpday  NO-FOCUS
@@ -411,7 +411,7 @@ END.
 
 &Scoped-define SELF-NAME bntAdvanceYear
 &ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL bntAdvanceYear C-Win
-ON CHOOSE OF bntAdvanceYear IN FRAME DEFAULT-FRAME /* >| */
+ON CHOOSE OF bntAdvanceYear IN FRAME DEFAULT-FRAME /* >> */
 DO:
   
   DO WITH FRAME {&FRAME-NAME}:
@@ -466,7 +466,7 @@ END.
 
 &Scoped-define SELF-NAME bntDecrimentYear
 &ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL bntDecrimentYear C-Win
-ON CHOOSE OF bntDecrimentYear IN FRAME DEFAULT-FRAME /* |< */
+ON CHOOSE OF bntDecrimentYear IN FRAME DEFAULT-FRAME /* << */
 DO:
   DO WITH FRAME {&FRAME-NAME}:
   
@@ -490,13 +490,9 @@ END.
 &ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL bntTpday C-Win
 ON CHOOSE OF bntTpday IN FRAME DEFAULT-FRAME /* Today */
 DO:
-  daSelectedDate = TODAY.
+  RUN dateSelected (INPUT TODAY).
   
-  RUN populateMonthCombo(INPUT daSelectedDate).
   
-  RUN populateYearCombo(INPUT daSelectedDate).
-  
-  RUN renderCalender.
 END.
 
 /* _UIB-CODE-BLOCK-END */
@@ -741,10 +737,19 @@ PROCEDURE initialise PRIVATE :
   Parameters:  <none>
   Notes:       
 ------------------------------------------------------------------------------*/
+    DEFINE VARIABLE parentHandle AS HANDLE      NO-UNDO.        
+    
     IF dateWidgetHandle:DATA-TYPE NE "DATE" THEN
         APPLY "END-ERROR":U TO SELF.
         
+    
     daInitialDate  = DATE( dateWidgetHandle:SCREEN-VALUE ).
+    
+    //MESSAGE dateWidgetHandle:PRIVATE-DATA. 
+
+    //parentHandle = dateWidgetHandle:INSTANTIATING-PROCEDURE.
+    
+    //MESSAGE parentHandle:INTERNAL-ENTRIES .
     
     ASSIGN
         daInitialDate  = TODAY WHEN daInitialDate EQ ?       
@@ -761,7 +766,7 @@ PROCEDURE initialise PRIVATE :
     
     DEFINE VARIABLE dynRect AS HANDLE      NO-UNDO.    
      
-    // Create a rectectangle to highlight the currentl day
+    // Create a rectectangle arround the whole window.
     CREATE RECT dynRect ASSIGN
         X         = 0
         Y         = 0
@@ -1041,33 +1046,10 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
     END.
     
 
-    
-    
     DO iRow = 0 TO 5:
 
         DO iCol = 0 TO 6:
         
-/*             IF daStartDate EQ TODAY THEN                                                   */
-/*             DO:                                                                            */
-/*                 CREATE RECT dynButton ASSIGN                                               */
-/*                           X            = calender1:X + (iCol * {&xiButtonWidth}) - 2       */
-/*                           Y            = calender1:Y + 28 + (iRow * {&xiButtonHeight}) - 2 */
-/*                           WIDTH-PIXEL  = {&xiButtonWidth} + 4                              */
-/*                           HEIGHT-PIXEL = {&xiButtonHeight} + 4                             */
-/*                           EDGE-PIXELS  = 2                                                 */
-/*                           FRAME     = FRAME DEFAULT-FRAME:HANDLE                           */
-/*                           FILLED  = TRUE                                                   */
-/*                           GRAPHIC-EDGE = TRUE                                              */
-/*                           VISIBLE   = TRUE                                                 */
-/*                           BGCOLOR = 12.                                                    */
-/*                                                                                            */
-/*                 CREATE ttCalenderDay.                                                      */
-/*                                                                                            */
-/*                 ASSIGN                                                                     */
-/*                     ttCalenderDay.WIDGET-HANDLE = dynButton:HANDLE.                        */
-/*                                                                                            */
-/*             END.                                                                           */
-            
             CREATE BUTTON dynButton ASSIGN
               X             = calender1:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
               Y             = calender1:Y + 28 + (iRow * {&xiButtonHeight}) + {&xcPadding}
@@ -1079,6 +1061,7 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
               FRAME         = FRAME DEFAULT-FRAME:HANDLE
               SENSITIVE     = ( MONTH(daStartDate) = MONTH(daPrevMonth) ) 
               VISIBLE       = TRUE
+              //FONT          = IF (custWeekDay(daStartDate) >= 6 ) THEN 6 ELSE ?
               TOOLTIP       = STRING(daStartDate,'99/99/9999')
               TRIGGERS  :
                 ON CHOOSE PERSISTENT RUN dateSelected(INPUT daStartDate ).
@@ -1109,18 +1092,19 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
         DO iCol = 0 TO 6:                
                   
             CREATE BUTTON dynButton ASSIGN
-                  X         = calender2:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-                  Y         = calender2:Y + 28 + (iRow * {&xiButtonHeight}) + {&xcPadding}
-                  WIDTH-PIXEL = {&xiButtonWidth}
+                  X            = calender2:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
+                  Y            = calender2:Y + 28 + (iRow * {&xiButtonHeight}) + {&xcPadding}
+                  WIDTH-PIXEL  = {&xiButtonWidth}
                   HEIGHT-PIXEL = {&xiButtonHeight} 
-                  LABEL     = STRING( DAY(daStartDate) )
-                  NO-FOCUS  = TRUE
-                  FLAT-BUTTON   = IF (daStartDate EQ TODAY) THEN FALSE ELSE TRUE
-                  FRAME         = FRAME DEFAULT-FRAME:HANDLE
-                  SENSITIVE     = ( MONTH(daStartDate) = MONTH(daCurrentMonth) ) 
-                  VISIBLE       = TRUE
-                  TOOLTIP       = STRING(daStartDate,'99/99/9999')
-                  TRIGGERS  :
+                  LABEL        = STRING( DAY(daStartDate) )
+                  NO-FOCUS     = TRUE
+                  FLAT-BUTTON  = IF (daStartDate EQ TODAY) THEN FALSE ELSE TRUE
+                  FRAME        = FRAME DEFAULT-FRAME:HANDLE
+                  SENSITIVE    = ( MONTH(daStartDate) = MONTH(daCurrentMonth) ) 
+                  VISIBLE      = TRUE
+                  //FONT         = IF (custWeekDay(daStartDate) >= 6 ) THEN 6 ELSE ?
+                  TOOLTIP      = STRING(daStartDate,'99/99/9999')
+                  TRIGGERS:
                     ON CHOOSE PERSISTENT RUN dateSelected(INPUT daStartDate ).
                   END TRIGGERS.
                   
@@ -1159,6 +1143,7 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
                   FRAME        = FRAME DEFAULT-FRAME:HANDLE
                   SENSITIVE    = ( MONTH(daStartDate) = MONTH(daNextMonth) ) 
                   VISIBLE      = TRUE
+                  //FONT         = IF (custWeekDay(daStartDate) >= 6 ) THEN 6 ELSE ?
                   TOOLTIP      = STRING(daStartDate,'99/99/9999')
                   TRIGGERS  :
                     ON CHOOSE PERSISTENT RUN dateSelected(INPUT daStartDate).
