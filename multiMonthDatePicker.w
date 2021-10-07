@@ -139,13 +139,13 @@ END FUNCTION.
 &Scoped-define PROCEDURE-TYPE Window
 &Scoped-define DB-AWARE no
 
-/* Name of first Frame and/or Browse and/or first Query                 */
+/* Name of designated FRAME-NAME and/or first browse and/or first query */
 &Scoped-define FRAME-NAME DEFAULT-FRAME
 
 /* Standard List Definitions                                            */
 &Scoped-Define ENABLED-OBJECTS bntAdvanceMonth bntAdvanceYear ~
-bntDecrimentMonth bntDecrimentYear calender2 calender3 calender1 cbMonth ~
-cbYear bntClose bntTpday 
+bntDecrimentMonth bntDecrimentYear bntTpday calender2 calender3 calender1 ~
+cbMonth cbYear bntClose 
 &Scoped-Define DISPLAYED-OBJECTS cbMonth cbYear finInitialDate fiPreMonth ~
 fiPostMonth 
 
@@ -174,53 +174,54 @@ DEFINE VAR C-Win AS WIDGET-HANDLE NO-UNDO.
 /* Definitions of the field level widgets                               */
 DEFINE BUTTON bntAdvanceMonth  NO-FOCUS
      LABEL ">" 
-     SIZE 4.5 BY .88.
+     SIZE 4.6 BY 1.
 
 DEFINE BUTTON bntAdvanceYear  NO-FOCUS
      LABEL ">>" 
-     SIZE 4.5 BY .88.
+     SIZE 4.6 BY 1.
 
 DEFINE BUTTON bntClose AUTO-END-KEY 
      LABEL "Close" 
-     SIZE 13.63 BY 1.13
+     SIZE 13.6 BY 1.14
      BGCOLOR 8 .
 
 DEFINE BUTTON bntDecrimentMonth  NO-FOCUS
      LABEL "<" 
-     SIZE 4.5 BY .88.
+     SIZE 4.6 BY 1.
 
 DEFINE BUTTON bntDecrimentYear  NO-FOCUS
      LABEL "<<" 
-     SIZE 4.5 BY .88.
+     SIZE 4.6 BY 1.
 
 DEFINE BUTTON bntTpday  NO-FOCUS
      LABEL "Today" 
-     SIZE 8 BY .88.
+     SIZE 8 BY 1.
 
 DEFINE VARIABLE cbMonth AS CHARACTER FORMAT "X(256)":U INITIAL "0" 
      VIEW-AS COMBO-BOX INNER-LINES 12
-     LIST-ITEM-PAIRS "Months",""
+     LIST-ITEM-PAIRS "Months",""""
      DROP-DOWN-LIST
-     SIZE 17 BY .88 NO-UNDO.
+     SIZE 17 BY 1 NO-UNDO.
 
 DEFINE VARIABLE cbYear AS CHARACTER FORMAT "X(256)":U 
      VIEW-AS COMBO-BOX INNER-LINES 21
      DROP-DOWN-LIST
-     SIZE 9.5 BY 1 NO-UNDO.
+     SIZE 9.6 BY 1 NO-UNDO.
 
 DEFINE VARIABLE finInitialDate AS CHARACTER FORMAT "X(256)":U 
+     LABEL "Widget Label" 
      VIEW-AS FILL-IN 
-     SIZE 42.5 BY 1
+     SIZE 42.6 BY 1
      FONT 6 NO-UNDO.
 
 DEFINE VARIABLE fiPostMonth AS CHARACTER FORMAT "X(256)":U INITIAL "Next Month" 
       VIEW-AS TEXT 
-     SIZE 14.5 BY .63
+     SIZE 14.6 BY .62
      FONT 6 NO-UNDO.
 
 DEFINE VARIABLE fiPreMonth AS CHARACTER FORMAT "X(256)":U INITIAL "Prev Month" 
       VIEW-AS TEXT 
-     SIZE 16 BY .63
+     SIZE 16 BY .62
      FONT 6 NO-UNDO.
 
 DEFINE RECTANGLE calender1
@@ -239,25 +240,25 @@ DEFINE RECTANGLE calender3
 /* ************************  Frame Definitions  *********************** */
 
 DEFINE FRAME DEFAULT-FRAME
-     bntAdvanceMonth AT ROW 1.5 COL 98.5 WIDGET-ID 20
-     bntAdvanceYear AT ROW 1.5 COL 103.5 WIDGET-ID 38
-     bntDecrimentMonth AT ROW 1.5 COL 7 WIDGET-ID 22
-     bntDecrimentYear AT ROW 1.5 COL 2 WIDGET-ID 36
-     cbMonth AT ROW 1.5 COL 43.75 COLON-ALIGNED NO-LABEL WIDGET-ID 10
-     cbYear AT ROW 1.5 COL 61.38 COLON-ALIGNED NO-LABEL WIDGET-ID 8
-     bntClose AT ROW 10.69 COL 94.13 WIDGET-ID 30
-     finInitialDate AT ROW 10.75 COL 2 NO-LABEL WIDGET-ID 40 NO-TAB-STOP 
-     bntTpday AT ROW 1.5 COL 37.25 HELP
+     bntAdvanceMonth AT ROW 1.33 COL 98.6 WIDGET-ID 20
+     bntAdvanceYear AT ROW 1.33 COL 103.6 WIDGET-ID 38
+     bntDecrimentMonth AT ROW 1.33 COL 7 WIDGET-ID 22
+     bntDecrimentYear AT ROW 1.33 COL 2 WIDGET-ID 36
+     bntTpday AT ROW 1.33 COL 37.2 HELP
           "Today" WIDGET-ID 26
-     fiPreMonth AT ROW 1.75 COL 12.5 NO-LABEL WIDGET-ID 24 NO-TAB-STOP 
-     fiPostMonth AT ROW 1.75 COL 83 NO-LABEL WIDGET-ID 28 NO-TAB-STOP 
-     calender2 AT ROW 2.5 COL 37.5 WIDGET-ID 4
-     calender3 AT ROW 2.5 COL 73 WIDGET-ID 12
-     calender1 AT ROW 2.5 COL 2 WIDGET-ID 14
+     cbMonth AT ROW 1.33 COL 43.8 COLON-ALIGNED NO-LABEL WIDGET-ID 10
+     cbYear AT ROW 1.33 COL 61.4 COLON-ALIGNED NO-LABEL WIDGET-ID 8
+     bntClose AT ROW 10.57 COL 94.2 WIDGET-ID 30
+     finInitialDate AT ROW 10.67 COL 69.6 RIGHT-ALIGNED WIDGET-ID 40 NO-TAB-STOP 
+     fiPreMonth AT ROW 1.76 COL 12.6 NO-LABEL WIDGET-ID 24 NO-TAB-STOP 
+     fiPostMonth AT ROW 1.76 COL 83 NO-LABEL WIDGET-ID 28 NO-TAB-STOP 
+     calender2 AT ROW 2.52 COL 37.6 WIDGET-ID 4
+     calender3 AT ROW 2.52 COL 73 WIDGET-ID 12
+     calender1 AT ROW 2.52 COL 2 WIDGET-ID 14
     WITH 1 DOWN NO-BOX KEEP-TAB-ORDER OVERLAY 
          SIDE-LABELS NO-UNDERLINE THREE-D 
          AT COL 1 ROW 1
-         SIZE 108.13 BY 11.06 WIDGET-ID 100.
+         SIZE 108.2 BY 10.81 WIDGET-ID 100.
 
 
 /* *********************** Procedure Settings ************************ */
@@ -277,12 +278,12 @@ IF SESSION:DISPLAY-TYPE = "GUI":U THEN
   CREATE WINDOW C-Win ASSIGN
          HIDDEN             = YES
          TITLE              = "<insert window title>"
-         HEIGHT             = 11.06
-         WIDTH              = 108.13
+         HEIGHT             = 10.81
+         WIDTH              = 108.2
          MAX-HEIGHT         = 16
-         MAX-WIDTH          = 164.13
+         MAX-WIDTH          = 164.2
          VIRTUAL-HEIGHT     = 16
-         VIRTUAL-WIDTH      = 164.13
+         VIRTUAL-WIDTH      = 164.2
          SHOW-IN-TASKBAR    = no
          CONTROL-BOX        = no
          MIN-BUTTON         = no
@@ -309,7 +310,7 @@ ELSE {&WINDOW-NAME} = CURRENT-WINDOW.
 /* SETTINGS FOR WINDOW C-Win
   VISIBLE,,RUN-PERSISTENT                                               */
 /* SETTINGS FOR FRAME DEFAULT-FRAME
-                                                                        */
+   FRAME-NAME                                                           */
 ASSIGN 
        calender1:HIDDEN IN FRAME DEFAULT-FRAME           = TRUE.
 
@@ -320,7 +321,7 @@ ASSIGN
        calender3:HIDDEN IN FRAME DEFAULT-FRAME           = TRUE.
 
 /* SETTINGS FOR FILL-IN finInitialDate IN FRAME DEFAULT-FRAME
-   NO-ENABLE ALIGN-L                                                    */
+   NO-ENABLE ALIGN-R                                                    */
 ASSIGN 
        finInitialDate:READ-ONLY IN FRAME DEFAULT-FRAME        = TRUE.
 
@@ -678,7 +679,7 @@ PROCEDURE enable_UI :
   DISPLAY cbMonth cbYear finInitialDate fiPreMonth fiPostMonth 
       WITH FRAME DEFAULT-FRAME IN WINDOW C-Win.
   ENABLE bntAdvanceMonth bntAdvanceYear bntDecrimentMonth bntDecrimentYear 
-         calender2 calender3 calender1 cbMonth cbYear bntClose bntTpday 
+         bntTpday calender2 calender3 calender1 cbMonth cbYear bntClose 
       WITH FRAME DEFAULT-FRAME IN WINDOW C-Win.
   {&OPEN-BROWSERS-IN-QUERY-DEFAULT-FRAME}
   VIEW C-Win.
@@ -737,7 +738,9 @@ PROCEDURE initialise PRIVATE :
   Parameters:  <none>
   Notes:       
 ------------------------------------------------------------------------------*/
-    DEFINE VARIABLE parentHandle AS HANDLE      NO-UNDO.        
+    DEFINE VARIABLE parentHandle AS HANDLE      NO-UNDO.       
+    
+    DEFINE VARIABLE daCalendarMaxDate AS DATE        NO-UNDO.
     
     IF dateWidgetHandle:DATA-TYPE NE "DATE" THEN
         APPLY "END-ERROR":U TO SELF.
@@ -747,9 +750,29 @@ PROCEDURE initialise PRIVATE :
     
     //MESSAGE dateWidgetHandle:PRIVATE-DATA. 
 
-    //parentHandle = dateWidgetHandle:INSTANTIATING-PROCEDURE.
+    parentHandle = dateWidgetHandle:INSTANTIATING-PROCEDURE.
     
     //MESSAGE parentHandle:INTERNAL-ENTRIES .
+    
+    IF VALID-HANDLE(parentHandle) THEN
+    DO:
+        IF LOGIcal(LOOKUP("callBackMaxDate", parentHandle:INTERNAL-ENTRIES)) THEN
+        DO:
+            IF LOGIcal(LOOKUP("FUNCTION", parentHandle:GET-SIGNATURE("callBackMaxDate"))) THEN
+            DO:
+                    
+                daCalendarMaxDate = DYNAMIC-FUNCTION("callBackMaxDate" IN parentHandle , dateWidgetHandle).
+                    
+                    //MESSAGE daCalendarMaxDate.
+                    
+            END.
+        END.
+    END.
+    
+    DO WITH FRAME {&frame-name}:
+        finInitialDate:SIDE-LABEL-HANDLE:SCREEN-VALUE = dateWidgetHandle:SIDE-LABEL-HANDLE:SCREEN-VALUE                    NO-ERROR.
+        finInitialDate:SIDE-LABEL-HANDLE:X            = finInitialDate:X - dateWidgetHandle:SIDE-LABEL-HANDLE:WIDTH-PIXELS NO-ERROR.
+    END.
     
     ASSIGN
         daInitialDate  = TODAY WHEN daInitialDate EQ ?       
@@ -935,24 +958,25 @@ PROCEDURE renderCalender PRIVATE :
   Notes:       
 ------------------------------------------------------------------------------*/
 
-DEFINE VARIABLE iDay        AS INTEGER     NO-UNDO.
-DEFINE VARIABLE dynButton   AS HANDLE      NO-UNDO.
-DEFINE VARIABLE txtLabel     AS HANDLE      NO-UNDO.
-DEFINE VARIABLE iCOl AS INTEGER     NO-UNDO.
-DEFINE VARIABLE iRow AS INTEGER     NO-UNDO.
+DEFINE VARIABLE iDay            AS INTEGER          NO-UNDO.
+DEFINE VARIABLE dynButton       AS HANDLE           NO-UNDO.
+DEFINE VARIABLE txtLabel        AS HANDLE           NO-UNDO.
+DEFINE VARIABLE calenderPanel   AS HANDLE EXTENT 3  NO-UNDO.
+DEFINE VARIABLE inCol           AS INTEGER          NO-UNDO.
+DEFINE VARIABLE inRow           AS INTEGER          NO-UNDO.
+DEFINE VARIABLE inWorkingMonth  AS INTEGER          NO-UNDO.
+DEFINE VARIABLE daPrevMonth     AS DATE             NO-UNDO.
+DEFINE VARIABLE daNextMonth     AS DATE             NO-UNDO.
+DEFINE VARIABLE daStartDate     AS DATE  EXTENT 3   NO-UNDO.
+DEFINE VARIABLE isLocked        AS INTEGER          NO-UNDO.
 
-DEFINE VARIABLE daPrevMonth AS DATE     NO-UNDO.
-DEFINE VARIABLE daNextMonth AS DATE     NO-UNDO.
-
-DEFINE VARIABLE daStartDate AS DATE        NO-UNDO.
-DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
-
-&SCOPED-DEFINE xiButtonWidth 39
-&SCOPED-DEFINE xiButtonHeight 34
+&SCOPED-DEFINE xiButtonWidth 24
+&SCOPED-DEFINE xiButtonHeight 22
 &SCOPED-DEFINE xiDayCaptionHeight 24
 &SCOPED-DEFINE xcDaysOfWeek "Mon,Tue,Wed,Thr,Fri,Sat,Sun"
 &SCOPED-DEFINE xcFontColourRed 12
 &SCOPED-DEFINE xcPadding 4
+&SCOPED-DEFINE xiMonday 1
 
 
 
@@ -971,62 +995,44 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
         
     END.
     
-             RUN LockWindowUpdate(FRAME {&FRAME-NAME}:HWND, 
-                         OUTPUT IsLocked).
+    RUN LockWindowUpdate(FRAME {&FRAME-NAME}:HWND, 
+                         OUTPUT isLocked).
                          
     FRAME {&frame-name}:VISIBLE = NO. 
     
+    calenderPanel[1] = calender1:HANDLE.
+    calenderPanel[2] = calender2:HANDLE.
+    calenderPanel[3] = calender3:HANDLE.
+    
+    DEFINE VARIABLE inCalenderPanel AS INTEGER     NO-UNDO.
+    
     IF NOT renderOnce THEN
     DO:
-        DO iCol = 0 TO 6:    
         
-            CREATE TEXT txtLabel ASSIGN
-                  X            = calender1:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-                  Y            = calender1:Y + 3
-                  WIDTH-PIXEL  = {&xiButtonWidth} + 1
-                  HEIGHT-PIXEL = {&xiDayCaptionHeight}
-                  SCREEN-VALUE =  ENTRY(iCol + 1, {&xcDaysOfWeek} )
-                  FRAME        = FRAME DEFAULT-FRAME:HANDLE
-                  FONT         = 6
-                  FGCOLOR      = IF (iCol EQ 5 OR iCol EQ 6) THEN {&xcFontColourRed} ELSE ? 
-                  VISIBLE      = TRUE
-                  .
-                  
-             Centre(txtLabel:HANDLE).     
-                  
-            CREATE TEXT txtLabel ASSIGN
-                  X            = calender2:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-                  Y            = calender2:Y + 3
-                  WIDTH-PIXEL  = {&xiButtonWidth} + 1
-                  HEIGHT-PIXEL = {&xiDayCaptionHeight}
-                  SCREEN-VALUE =  ENTRY(iCol + 1, {&xcDaysOfWeek} )
-                  FRAME        = FRAME DEFAULT-FRAME:HANDLE
-                  FONT         = 6
-                  FGCOLOR      = IF (iCol EQ 5 OR iCol EQ 6) THEN {&xcFontColourRed} ELSE ? 
-                  VISIBLE      = TRUE
-                  .              
-            Centre(txtLabel:HANDLE).                   
-                  
-            CREATE TEXT txtLabel ASSIGN
-                  X            = calender3:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-                  Y            = calender3:Y + 3
-                  WIDTH-PIXEL  = {&xiButtonWidth} + 1
-                  HEIGHT-PIXEL = {&xiDayCaptionHeight}
-                  SCREEN-VALUE =  ENTRY(iCol + 1, {&xcDaysOfWeek} )
-                  FRAME        = FRAME DEFAULT-FRAME:HANDLE
-                  FONT         = 6
-                  FGCOLOR      = IF (iCol EQ 5 OR iCol EQ 6) THEN {&xcFontColourRed} ELSE ?  
-                  VISIBLE      = TRUE
-                  .              
-                  
-            Centre(txtLabel:HANDLE).                   
+        DO inCalenderPanel = 1 TO 3:
+        
+            DO inCol = 0 TO 6:    
+        
+                CREATE TEXT txtLabel ASSIGN
+                      X            = calenderPanel[inCalenderPanel]:X + (inCol * {&xiButtonWidth}) + {&xcPadding}
+                      Y            = calenderPanel[inCalenderPanel]:Y + 3
+                      WIDTH-PIXEL  = {&xiButtonWidth} + 1
+                      HEIGHT-PIXEL = {&xiDayCaptionHeight}
+                      SCREEN-VALUE = ENTRY(inCol + 1, {&xcDaysOfWeek} )
+                      FRAME        = FRAME DEFAULT-FRAME:HANDLE
+                      FONT         = 6
+                      FGCOLOR      = IF (inCol EQ 5 OR inCol EQ 6) THEN {&xcFontColourRed} ELSE ? 
+                      VISIBLE      = TRUE
+                      .
+                      
+                 Centre(txtLabel:HANDLE).     
+            END.
         END.
         
         renderOnce = TRUE.
     END.
-
-
     
+    //Clean up and existing buttons
     FOR EACH ttCalenderDay:
         
         IF VALID-HANDLE(ttCalenderDay.WIDGET-HANDLE) THEN
@@ -1036,51 +1042,56 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
             
     END.
     
-
-    
     ASSIGN
-        daStartDate = daPrevMonth.
+        daStartDate[1] = daPrevMonth
+        daStartDate[2] = daCurrentMonth
+        daStartDate[3] = daNextMonth.
+    
+    DO inCalenderPanel = 1 TO 3:
+    
+        inWorkingMonth = MONTH(daStartDate[inCalenderPanel]).
+    
+        DO WHILE custWeekDay(daStartDate[inCalenderPanel]) NE {&xiMonday}:
+            daStartDate[inCalenderPanel] = daStartDate[inCalenderPanel] - 1.
+        END.
         
-    DO WHILE custWeekDay(daStartDate) NE 1:
-        daStartDate = daStartDate - 1.
-    END.
-    
+        DO inRow = 0 TO 5:
 
-    DO iRow = 0 TO 5:
-
-        DO iCol = 0 TO 6:
-        
-            CREATE BUTTON dynButton ASSIGN
-              X             = calender1:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-              Y             = calender1:Y + 28 + (iRow * {&xiButtonHeight}) + {&xcPadding}
-              WIDTH-PIXEL   = {&xiButtonWidth}
-              HEIGHT-PIXEL  = {&xiButtonHeight} 
-              LABEL         = STRING(DAY(daStartDate))
-              NO-FOCUS      = TRUE
-              FLAT-BUTTON   = IF (daStartDate EQ TODAY) THEN FALSE ELSE TRUE
-              FRAME         = FRAME DEFAULT-FRAME:HANDLE
-              SENSITIVE     = ( MONTH(daStartDate) = MONTH(daPrevMonth) ) 
-              VISIBLE       = TRUE
-              //FONT          = IF (custWeekDay(daStartDate) >= 6 ) THEN 6 ELSE ?
-              TOOLTIP       = STRING(daStartDate,'99/99/9999')
-              TRIGGERS  :
-                ON CHOOSE PERSISTENT RUN dateSelected(INPUT daStartDate ).
-              END TRIGGERS.
+            DO inCol = 0 TO 6:
             
-            CREATE ttCalenderDay.
+                CREATE BUTTON dynButton ASSIGN
+                  X             = calenderPanel[inCalenderPanel]:X + (inCol * {&xiButtonWidth}) + {&xcPadding}
+                  Y             = calenderPanel[inCalenderPanel]:Y + 28 + (inRow * {&xiButtonHeight}) + {&xcPadding}
+                  WIDTH-PIXEL   = {&xiButtonWidth}
+                  HEIGHT-PIXEL  = {&xiButtonHeight} 
+                  LABEL         = STRING( DAY(daStartDate[inCalenderPanel]) )
+                  NO-FOCUS      = TRUE
+                  FLAT-BUTTON   = IF (daStartDate[inCalenderPanel] EQ TODAY) THEN FALSE ELSE TRUE
+                  FRAME         = FRAME DEFAULT-FRAME:HANDLE
+                  SENSITIVE     = IF (MONTH(daStartDate[inCalenderPanel]) EQ inWorkingMonth) THEN TRUE ELSE FALSE 
+                  VISIBLE       = IF (MONTH(daStartDate[inCalenderPanel]) EQ inWorkingMonth) THEN TRUE ELSE FALSE
+                  //FONT          = IF (custWeekDay(daStartDate) >= 6 ) THEN 6 ELSE ?
+                  TOOLTIP       = STRING(daStartDate[inCalenderPanel],'99/99/9999')
+                  TRIGGERS:
+                    ON CHOOSE PERSISTENT RUN dateSelected(INPUT daStartDate[inCalenderPanel] ).
+                  END TRIGGERS.
                 
-            ASSIGN 
-                ttCalenderDay.WIDGET-HANDLE = dynButton:HANDLE.
+                CREATE ttCalenderDay.
+                    
+                ASSIGN 
+                    ttCalenderDay.WIDGET-HANDLE = dynButton:HANDLE.
+                    
+                IF daInitialDate EQ daStartDate[inCalenderPanel] AND 
+                   (MONTH(daStartDate[inCalenderPanel]) EQ inWorkingMonth) THEN
+                    RUN highlightDay(INPUT dynButton:HANDLE, 
+                                     INPUT calenderPanel[inCalenderPanel]:HANDLE).                  
                 
-            IF daInitialDate EQ daStartDate THEN
-                RUN highlightDay(INPUT dynButton:HANDLE, 
-                                 INPUT calender3:HANDLE).                  
-            
-            daStartDate = daStartDate + 1.                
-        END.                
-    END.          
+                daStartDate[inCalenderPanel] = daStartDate[inCalenderPanel] + 1.                
+            END.                
+        END.          
+    END.    
     
-    
+    /*
     ASSIGN
         daStartDate = daCurrentMonth.
     
@@ -1088,12 +1099,12 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
         daStartDate = daStartDate - 1.
     END.
                 
-    DO iRow = 0 TO 5:
-        DO iCol = 0 TO 6:                
+    DO inRow = 0 TO 5:
+        DO inCol = 0 TO 6:                
                   
             CREATE BUTTON dynButton ASSIGN
-                  X            = calender2:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-                  Y            = calender2:Y + 28 + (iRow * {&xiButtonHeight}) + {&xcPadding}
+                  X            = calender2:X + (inCol * {&xiButtonWidth}) + {&xcPadding}
+                  Y            = calender2:Y + 28 + (inRow * {&xiButtonHeight}) + {&xcPadding}
                   WIDTH-PIXEL  = {&xiButtonWidth}
                   HEIGHT-PIXEL = {&xiButtonHeight} 
                   LABEL        = STRING( DAY(daStartDate) )
@@ -1129,12 +1140,12 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
         daStartDate = daStartDate - 1.
     END.   
 
-    DO iRow = 0 TO 5:
-        DO iCol = 0 TO 6:                
+    DO inRow = 0 TO 5:
+        DO inCol = 0 TO 6:                
                 
             CREATE BUTTON dynButton ASSIGN
-                  X            = calender3:X + (iCol * {&xiButtonWidth}) + {&xcPadding}
-                  Y            = calender3:Y + 28 + (iRow * {&xiButtonHeight}) + {&xcPadding}
+                  X            = calender3:X + (inCol * {&xiButtonWidth}) + {&xcPadding}
+                  Y            = calender3:Y + 28 + (inRow * {&xiButtonHeight}) + {&xcPadding}
                   WIDTH-PIXEL  = {&xiButtonWidth}
                   HEIGHT-PIXEL = {&xiButtonHeight} 
                   LABEL        = STRING(DAY(daStartDate))
@@ -1163,8 +1174,10 @@ DEFINE VARIABLE IsLocked AS INTEGER     NO-UNDO.
         END.
     END.
     
-   IF IsLocked NE 0 THEN 
-     RUN LockWindowUpdate( 0, OUTPUT IsLocked).
+    */
+    
+   IF isLocked NE 0 THEN 
+     RUN LockWindowUpdate( 0, OUTPUT isLocked).
     
     FRAME {&FRAME-NAME}:VISIBLE = YES.
     
